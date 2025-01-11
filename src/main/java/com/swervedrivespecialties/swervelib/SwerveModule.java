@@ -1,14 +1,15 @@
 package com.swervedrivespecialties.swervelib;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
 public interface SwerveModule {
-    MotorController getDriveMotor();
+    TalonFX getDriveMotor();
 
-    MotorController getSteerMotor();
+    TalonFX getSteerMotor();
 
     AbsoluteEncoder getSteerEncoder();
 

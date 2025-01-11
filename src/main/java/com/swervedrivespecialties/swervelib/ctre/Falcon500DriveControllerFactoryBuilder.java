@@ -8,8 +8,6 @@ import com.swervedrivespecialties.swervelib.DriveController;
 import com.swervedrivespecialties.swervelib.DriveControllerFactory;
 import com.swervedrivespecialties.swervelib.MechanicalConfiguration;
 
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-
 public final class Falcon500DriveControllerFactoryBuilder {
     // private static final double TICKS_PER_ROTATION = 2048.0;
 
@@ -103,7 +101,7 @@ public final class Falcon500DriveControllerFactoryBuilder {
         }
 
         @Override
-        public MotorController getDriveMotor() {
+        public TalonFX getDriveMotor() {
             return this.motor;
         }
 
@@ -117,13 +115,13 @@ public final class Falcon500DriveControllerFactoryBuilder {
         public double getStateVelocity() {
             // Multiply to 10 to convert from m/100ms to m/s
             // return motor.getSelectedSensorVelocity() * sensorPositionCoefficient * 10.0;
-            return motor.getVelocity().getValue() * sensorPositionCoefficient;
+            return motor.getVelocity().getValueAsDouble() * sensorPositionCoefficient;
         }
 
         @Override
         public double getStateDistance() {
             // return motor.getSelectedSensorPosition() * sensorPositionCoefficient;
-            return motor.getPosition().getValue() * sensorPositionCoefficient;
+            return motor.getPosition().getValueAsDouble() * sensorPositionCoefficient;
         }
     }
 }

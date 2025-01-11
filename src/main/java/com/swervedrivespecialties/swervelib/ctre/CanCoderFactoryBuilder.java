@@ -2,13 +2,14 @@ package com.swervedrivespecialties.swervelib.ctre;
 
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
 import com.swervedrivespecialties.swervelib.AbsoluteEncoderFactory;
+
+import edu.wpi.first.units.measure.Angle;
 
 public class CanCoderFactoryBuilder {
     private Direction direction = Direction.COUNTER_CLOCKWISE;
@@ -28,7 +29,7 @@ public class CanCoderFactoryBuilder {
         return configuration -> {
             CANcoderConfiguration config = new CANcoderConfiguration()
                 .withMagnetSensor(new MagnetSensorConfigs()
-                    .withAbsoluteSensorRange(AbsoluteSensorRangeValue.Unsigned_0To1)
+                    .withAbsoluteSensorDiscontinuityPoint(1)
                     .withSensorDirection(direction == Direction.CLOCKWISE ? SensorDirectionValue.Clockwise_Positive : SensorDirectionValue.CounterClockwise_Positive)
                     .withMagnetOffset(configuration.getOffset() / (2 * Math.PI)));
 
@@ -52,7 +53,7 @@ public class CanCoderFactoryBuilder {
 
         @Override
         public double getAbsoluteAngle() {
-            StatusSignal<Double> angleCode = encoder.getPosition();
+            StatusSignal<Angle> angleCode = encoder.getPosition();
 
             for (int i = 0; i < ATTEMPTS; i++) {
                 if (angleCode.getStatus() == StatusCode.OK) break;
@@ -64,7 +65,7 @@ public class CanCoderFactoryBuilder {
 
             CtreUtils.checkCtreError(angleCode.getStatus(), "Failed to retrieve CANcoder "+encoder.getDeviceID()+" absolute position after "+ATTEMPTS+" tries");
 
-            double angle = angleCode.getValue() * 2.0 * Math.PI;
+            double angle = angleCode.getValueAsDouble() * 2.0 * Math.PI;
             angle %= 2.0 * Math.PI;
             if (angle < 0.0) {
                 angle += 2.0 * Math.PI;

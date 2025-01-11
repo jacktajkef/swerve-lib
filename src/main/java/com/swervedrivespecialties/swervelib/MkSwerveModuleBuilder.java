@@ -1,7 +1,6 @@
 package com.swervedrivespecialties.swervelib;
 
 import com.swervedrivespecialties.swervelib.ctre.*;
-import com.swervedrivespecialties.swervelib.rev.*;
 
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
@@ -20,23 +19,6 @@ public class MkSwerveModuleBuilder {
                 .withPidConstants(configuration.getSteerKP(), configuration.getSteerKI(), configuration.getSteerKD())
                 .withMotionMagic(configuration.getSteerMMkV(), configuration.getSteerMMkA(),
                         configuration.getSteerMMkS())
-                .withCurrentLimit(configuration.getSteerCurrentLimit())
-                .build(new CanCoderFactoryBuilder()
-                        .withReadingUpdatePeriod(100)
-                        .build());
-    }
-
-    private static DriveControllerFactory<?, Integer> getNeoDriveFactory(MkModuleConfiguration configuration) {
-        return new NeoDriveControllerFactoryBuilder()
-                .withVoltageCompensation(configuration.getNominalVoltage())
-                .withCurrentLimit(configuration.getDriveCurrentLimit())
-                .build();
-    }
-
-    private static SteerControllerFactory<?, SteerConfiguration<CanCoderAbsoluteConfiguration>> getNeoSteerFactory(MkModuleConfiguration configuration) {
-        return new NeoSteerControllerFactoryBuilder()
-                .withVoltageCompensation(configuration.getNominalVoltage())
-                .withPidConstants(configuration.getSteerKP(), configuration.getSteerKI(), configuration.getSteerKD())
                 .withCurrentLimit(configuration.getSteerCurrentLimit())
                 .build(new CanCoderFactoryBuilder()
                         .withReadingUpdatePeriod(100)
@@ -122,9 +104,6 @@ public class MkSwerveModuleBuilder {
             case FALCON:
                 this.driveFactory = getFalcon500DriveFactory(this.configuration);
                 break;
-            case NEO:
-                this.driveFactory = getNeoDriveFactory(this.configuration);
-                break;
             default:
                 break;
         }
@@ -160,12 +139,6 @@ public class MkSwerveModuleBuilder {
                     this.steerFactory = getFalcon500SteerFactory(MkModuleConfiguration.getDefaultSteerFalcon500());
                 else
                     this.steerFactory = getFalcon500SteerFactory(this.configuration);
-                break;
-            case NEO:
-                if (this.useDefaultSteerConfiguration)
-                    this.steerFactory = getNeoSteerFactory(MkModuleConfiguration.getDefaultSteerNEO());
-                else
-                    this.steerFactory = getNeoSteerFactory(this.configuration);
                 break;
             default:
                 break;

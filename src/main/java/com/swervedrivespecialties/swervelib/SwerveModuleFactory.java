@@ -1,6 +1,6 @@
 package com.swervedrivespecialties.swervelib;
 
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
 public class SwerveModuleFactory<DC, SC> {
@@ -86,12 +86,12 @@ public class SwerveModuleFactory<DC, SC> {
         }
 
         @Override
-        public MotorController getDriveMotor() {
+        public TalonFX getDriveMotor() {
             return driveController.getDriveMotor();
         }
 
         @Override
-        public MotorController getSteerMotor() {
+        public TalonFX getSteerMotor() {
             return steerController.getSteerMotor();
         }
 
