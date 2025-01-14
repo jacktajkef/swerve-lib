@@ -66,9 +66,23 @@ public final class SdsModuleConfigurations {
             (14.0 / 50.0) * (10.0 / 60.0),
             false
     );
+    public static final MechanicalConfiguration MK4N_L1 = new MechanicalConfiguration(
+            0.1016,
+            (16.0 / 50.0) * (25.0 / 19.0) * (15.0 / 45.0),
+            true,
+            (16.0 / 50.0) * (10.0 / 60.0),
+            false
+    );
     public static final MechanicalConfiguration MK4N_L2 = new MechanicalConfiguration(
             0.1016,
             (16.0 / 50.0) * (27.0 / 17.0) * (15.0 / 45.0),
+            true,
+            (16.0 / 50.0) * (10.0 / 60.0),
+            false
+    );
+    public static final MechanicalConfiguration MK4N_L3 = new MechanicalConfiguration(
+            0.1016,
+            (16.0 / 50.0) * (28.0 / 16.0) * (15.0 / 45.0),
             true,
             (16.0 / 50.0) * (10.0 / 60.0),
             false
